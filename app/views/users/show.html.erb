@@ -1,0 +1,6 @@
+<h2>Hello #{user.name}!  What would you like to do today?</h2>
+
+<%= link_to "Add a movie", new_movie_path %>
+<%= link_to "See your movies", movies_path %>
+<%= link_to "Edit your account", edit_user_path(@user) %>
+<%= link_to "Logout", '/user/destroy(@user)' %>

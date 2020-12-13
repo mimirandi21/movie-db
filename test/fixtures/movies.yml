@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  year: 
+  genre: MyText
+  plot: MyText
+  summary: MyText
+  rating: MyText
+  score: 1.5
+  length: 
+  poster_url: MyText
+  director_1_id: 
+  director_2_id: 
+
+two:
+  name: MyText
+  year: 
+  genre: MyText
+  plot: MyText
+  summary: MyText
+  rating: MyText
+  score: 1.5
+  length: 
+  poster_url: MyText
+  director_1_id: 
+  director_2_id: 
