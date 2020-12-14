@@ -6,6 +6,7 @@ class MovieDirectorsController < ApplicationController
 
     def create
         @movie_director = MovieDirector.create(movie_director_params)
+    
     end
 
     private

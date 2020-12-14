@@ -6,6 +6,7 @@ class ActorsController < ApplicationController
     end
 
     def create
+        hash = ImdbService.new
     end
 
     def index

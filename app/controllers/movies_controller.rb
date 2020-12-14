@@ -12,7 +12,6 @@ class MoviesController < ApplicationController
         else
             :create_from_api
         end
-        
     end
 
     def create_from_db

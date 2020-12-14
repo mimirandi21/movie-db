@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/users/signin', to: 'users#signin'
   post '/users/signin', to: 'users#login'
   get 'users/movies/choose', to: 'movies#choose'
+  post 'users/movies/choose', to:
   
   resources :movie_directors
   resources :user_movies do
