@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   root 'users#home'
   get '/auth/:provider/callback', to: 'users#omniauth'
   get 'auth/failure', to: redirect('/')
-  get '/users/login', to: 'users#login'
+  get '/users/signin', to: 'users#signin'
+  post '/users/signin', to: 'users#login'
   get 'users/movies/choose', to: 'movies#choose'
   
   resources :movie_directors

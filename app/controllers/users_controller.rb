@@ -1,5 +1,5 @@
 class UsersController < ApplicationController 
-    skip_before_action :verify_authenticity_token, :only => [:index, :show]
+    # skip_before_action :verify_authenticity_token, :only => [:index, :show]
 
     def home
         @message = session[:message]
