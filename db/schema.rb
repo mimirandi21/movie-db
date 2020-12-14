@@ -22,17 +22,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_004848) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "collections", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "movie_id"
-    t.text "source"
-    t.integer "user_rating"
-    t.text "user_notes"
-    t.text "private_notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "directors", force: :cascade do |t|
     t.text "name"
     t.text "imdb_link"
@@ -51,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_004848) do
   create_table "movie_directors", force: :cascade do |t|
     t.bigint "movie_id"
     t.bigint "director_id"
+    t.text "imdb_link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -65,6 +55,18 @@ ActiveRecord::Schema.define(version: 2020_12_14_004848) do
     t.float "score"
     t.bigint "length"
     t.text "poster_url"
+    t.text "imdb_link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_movies", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "movie_id"
+    t.text "source"
+    t.integer "user_rating"
+    t.text "user_notes"
+    t.text "private_notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -74,8 +76,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_004848) do
     t.text "email"
     t.text "password_digest"
     t.uuid "uid"
-    t.text "google_token"
-    t.text "google_refresh_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

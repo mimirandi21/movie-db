@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'users#omniauth'
   get 'auth/failure', to: redirect('/')
   get '/users/login', to: 'users#login'
-  get 'users/movies/choose' to: 'movies#choose'
+  get 'users/movies/choose', to: 'movies#choose'
   
   resources :movie_directors
-  resources :collections do
+  resources :user_movies do
     resources :movies
   end
   resources :movie_actors
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
   resources :users do
     resources :movies
-    resources :collections
+    resources :user_movies
     resources :actors, only: [:show, :index]
     resources :directors, only: [:show, :index]
   end

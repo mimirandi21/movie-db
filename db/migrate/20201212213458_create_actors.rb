@@ -3,7 +3,6 @@ class CreateActors < ActiveRecord::Migration[6.0]
     create_table :actors do |t|
       t.text :name
       t.text :imdb_link
-
       t.timestamps
     end
   end

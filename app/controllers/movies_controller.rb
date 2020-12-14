@@ -7,9 +7,21 @@ class MoviesController < ApplicationController
     end
 
     def create
+        if @movies = Movie.where("name LIKE ?", "%" + params[:name] + "%")
+            redirect_to 'movies/choose'
+        else
+            :create_from_api
+        end
+        
+    end
+
+    def create_from_db
+
+    end
+
+    def create_from_api
         @movie = Movie.new(movie_params)
         hash = ImdbService.new
-
     end
 
     def show
@@ -21,7 +33,7 @@ class MoviesController < ApplicationController
         if params[:user_id]
             @movies = Movie.where(user_id: params[:user_id])
             @user = current_user
-            @controller = Controller.find_or_create_by(user_id: params[:user_id], movie_id: @movie.id)
+            @user_movie = UserMovie.find_or_create_by(user_id: params[:user_id], movie_id: @movie.id)
         else
             @movies = Movie.all
         end
@@ -36,7 +48,7 @@ class MoviesController < ApplicationController
     private
 
     def movie_params
-        params.require(:movie).permit(:poster_url, :genre, :year, :name, :plot, :summary, :rating, :score, :length, :director_id,
+        params.require(:movie).permit(:poster_url, :imdb_link, :genre, :year, :name, :plot, :summary, :rating, :score, :length, :director_id,
             actors_attributes: [:name, :imdb_link],
             directors_attributes: [:name, :imdb_link],
             actor_movies_attributes: [:role, :movie_id, :actor_id]    

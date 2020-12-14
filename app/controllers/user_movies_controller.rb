@@ -1,27 +1,27 @@
-class CollectionsController < ApplicationController
-    before_action :set_collection, except: [:new, :create]
+class UserMoviesController < ApplicationController
+    before_action :set_user_movies, except: [:new, :create]
     before_action :set_user
 
     def new
-        @collection = Collection.new
+        @user_movies = UserMovie.new
     end
 
     def create
-        @collection = Collection.create(collection_params)
-        if @collection.valid?
+        @user_movie = UserMovie.create(user_movie_params)
+        if @user_movie.valid?
             session[:message] = "Your collection has been updated."
             
         else
             session[:message] = "Update failed.  Please try again."
         end
-        redirect_to collection_movies_path(@collection)
+        redirect_to user_movie_movies_path(@user_movie)
     end
 
     def edit
     end
 
     def update
-        @collection.update(collection_params)
+        @user_movie.update(user_movie_params)
 
     end
 
@@ -29,8 +29,8 @@ class CollectionsController < ApplicationController
     end
 
     def set_collection
-        @collection = Collection.find(params[:id])
-        puts @collection
+        @user_movie = UserMovie.find(params[:id])
+        puts @user_movie
     end
 
     def set_user
@@ -45,8 +45,8 @@ class CollectionsController < ApplicationController
 
     private
 
-    def collection_params
-        params.require(:collection).permit(:source, :user_rating, :notes, :private_notes, :user_id, :movie_id)
+    def user_movie_params
+        params.require(:user_movie).permit(:source, :user_rating, :user_notes, :private_notes, :user_id, :movie_id)
     end
 
 end

@@ -1,9 +1,3 @@
-<h2>Which of these is the correct movie</h2>
+<%= render 'choose' %>
 
-<ol>
-<li><% @movies.each do |movie| %>
-    <%= movie.image_url %>
-    <%= movie.name %>
-    <%= movie.actors %>
-<% end %></li>
-</ol>
+<h4>If none of these is correct, click here to search again.</h4>

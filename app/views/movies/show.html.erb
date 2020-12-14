@@ -12,10 +12,11 @@
     <ul><% @movie.actors.each do |actor| %>
         <li><%= link_to actor.name, actor_path(actor) %></li>
     <% end %></ul>
-    <h3><%= @collection.source %></h3>
-    <h3><%= @collection.user_rating %></h3>
-    <h3><%= @collection.notes %></h3>
-    <h3><%= @collection.private_notes %></h3>
+    <h3><%= @user_movie.source %></h3>
+    <h3><%= @user_movie.user_rating %></h3>
+    <h3><%= @user_movie.user_notes %></h3>
+    <h3><%= @user_movie.private_notes %></h3>
+    <h3><%= @movie.imdb_link%></h3>
 <% else %>
     <%= @movie.poster_url %>
     <h1><%= @movie.name %></h1>
@@ -30,5 +31,6 @@
     <ul><% @movie.actors.each do |actor| %>
         <li><%= link_to actor.name, actor_path(actor) %></li>
     <% end %></ul>
+    <h3><%= @movie.imdb_link%></h3>
 <% end %>
 

@@ -10,7 +10,7 @@ class CreateMovies < ActiveRecord::Migration[6.0]
       t.float :score
       t.bigint :length
       t.text :poster_url
-      
+      t.text :imdb_link
       t.timestamps
     end
   end

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-    has_many :collections
-    has_many :movies, through: :collections
+    has_many :user_movies
+    has_many :movies, through: :user_movies
     validates :email, :uniqueness => true
 
     has_secure_password

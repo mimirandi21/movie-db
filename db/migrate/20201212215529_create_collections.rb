@@ -1,6 +1,6 @@
 class CreateCollections < ActiveRecord::Migration[6.0]
   def change
-    create_table :collections do |t|
+    create_table :user_movies do |t|
       t.integer :user_id
       t.integer :movie_id
       t.text :source

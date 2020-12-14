@@ -1,0 +1,17 @@
+<%= @user_movies.movie.poster_url %>
+<h1><%= @user_movies.movie.name %></h1>
+<h3><%= @user_movies.movie.year %></h3>
+<h1><%= @user_movies.movie.length %></h1>
+<h3><%= @user_movies.movie.genre %></h3>
+<h1><%= @user_movies.movie.plot %></h1>
+<h3><%= @user_movies.movie.rating %></h3>
+<h1><%= @user_movies.movie.score %></h1>
+<h3><%= @user_movies.movie.summary %></h3>
+<h1><%= link_to @user_movies.movie.director, director_path(@collection.movie.director) %></h1>
+<ul><% @user_movies.movie.actors.each do |actor| %>
+    <li><%= link_to actor.name, actor_path(actor) %></li>
+<% end %></ul>
+<h3><%= @user_movies.source %></h3>
+<h3><%= @user_movies.user_rating %></h3>
+<h3><%= @user_movies.user_notes %></h3>
+<h3><%= @user_movies.private_notes %></h3>
