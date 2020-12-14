@@ -25,15 +25,22 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'figaro'
 #helps simplify calling API
 gem 'httparty'
+gem 'http'
+gem 'json'
+gem 'openssl'
+gem 'net-http'
+gem 'uri'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'tux'
 gem 'omniauth'
 gem 'omniauth-google'
 gem 'omniauth-google-oauth2'
+gem 'rb-readline'
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.2', require: false
 gem 'require_all'
+gem 'bootsnap', '>= 1.4.2', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

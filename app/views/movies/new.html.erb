@@ -1,0 +1,29 @@
+<%= form_with model: @movie do |form| %>
+Movie:
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <br>
+
+    <%= form.fields_for :collections do |collection_form| %>
+    
+        <%= collection_form.label :source %>
+        <%= collection_form.text_field :source %>
+        <br>
+
+        <%= collection_form.label :user_rating %>
+        <%= collection_form.number_field :user_rating %>
+        <br>
+        
+        <%= collection_form.label :notes %>
+        <%= collection_form.text_area :notes %>
+        <br>
+
+        <%=collection_form.label :private_notes %>
+        <%= collection_form.text_area :private_notes %>
+        <br>
+
+    <% end %>
+
+    <%= form.submit %>
+
+<% end %>

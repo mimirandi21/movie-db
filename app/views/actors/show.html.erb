@@ -1,0 +1,5 @@
+<h2><%= @actor.name %></h2>
+
+<ul><% @actor.movies.each do |movie| %>
+    <li><%= link_to movie.name, movie_path(movie) %><%= movie.role %></li>
+<% end %></ul>

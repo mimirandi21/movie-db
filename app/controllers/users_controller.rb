@@ -1,4 +1,5 @@
-class UsersController < ApplicationController
+class UsersController < ApplicationController 
+    skip_before_action :verify_authenticity_token, :only => [:index, :show]
 
     def home
         @message = session[:message]
@@ -9,11 +10,10 @@ class UsersController < ApplicationController
         if logged_in? #verifys user logged in (using helpers)
             #error message
             @message = "You are already logged in"
+            redirect_to user_path(current_user)
         else
-            #create session message (@message), route to home
-            @message = session[:message]
-            session[:message] = nil
-            erb :'/sessions/home'
+            @user = User.new
+            render new_user_path
         end
     end
 
@@ -21,12 +21,12 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         if !@user.save
             session[:message] = "Oops, let's try that again!"
-            redirect_to '/users/new'
+            redirect_to root_path
         else
             @user.save
             session[:user_id] = @user.id
             session[:message] = "Please log in."
-            redirect_to users_login_path
+            redirect_to users_signin_path
         end
     end
 
@@ -42,14 +42,23 @@ class UsersController < ApplicationController
             end
     end
 
+    def signin
+        render 'users/signin'
+    end
+
     def login
-        @user = User.new
+        @user = User.find_by(email: params[:email])
+        return head(:forbidden) unless @user.authenticate(params[:password])
+        session[:user_id] = @user.id
+        redirect_to user_path(@user)
     end 
 
     def edit
+        @user = current_user
     end
 
     def update
+        @user = current_user
     end
 
     def show
@@ -60,7 +69,9 @@ class UsersController < ApplicationController
     end
 
     def destroy
+        session.delete :user_id
     end
+
 
     private
 

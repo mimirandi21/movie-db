@@ -1,0 +1,8 @@
+<%= form_tag edit_collection_path do %>
+    <label>Edit</label><br>
+    <%= text_field_tag :'collection[source]'%><br>
+    <%= text_field_tag :'collection[user_rating]'%><br>
+    <%= text_field_tag :'collection[notes]'%><br>
+    <%= text_field_tag :'collection[private_notes]'%><br>
+    <%= submit_tag "Submit Changes" %>
+<% end %>

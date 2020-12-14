@@ -1,6 +1,12 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
+    helper_method :logged_in?, :current_user
 
-    helpers do
+    # def verify_authenticity_token
+    #     request.headers['X-CSRF-Token'] ||= request.headers['X-XSRF-TOKEN']
+    #     super
+    # end
+
+    private
 
         def logged_in?
             !!session[:user_id]
@@ -9,6 +15,6 @@ class ApplicationController < ActionController::Base
         def current_user
             @current_user = User.find_by(id: session[:user_id])
         end
-    end
     
+
 end

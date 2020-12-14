@@ -1,0 +1,34 @@
+<% if logged_in? %>
+    <%= @movie.poster_url %>
+    <h1><%= @movie.name %></h1>
+    <h3><%= @movie.year %></h3>
+    <h1><%= @movie.length %></h1>
+    <h3><%= @movie.genre %></h3>
+    <h1><%= @movie.plot %></h1>
+    <h3><%= @movie.rating %></h3>
+    <h1><%= @movie.score %></h1>
+    <h3><%= @movie.summary %></h3>
+    <h1><%= link_to @movie.director, director_path(@movie.director) %></h1>
+    <ul><% @movie.actors.each do |actor| %>
+        <li><%= link_to actor.name, actor_path(actor) %></li>
+    <% end %></ul>
+    <h3><%= @collection.source %></h3>
+    <h3><%= @collection.user_rating %></h3>
+    <h3><%= @collection.notes %></h3>
+    <h3><%= @collection.private_notes %></h3>
+<% else %>
+    <%= @movie.poster_url %>
+    <h1><%= @movie.name %></h1>
+    <h3><%= @movie.year %></h3>
+    <h1><%= @movie.length %></h1>
+    <h3><%= @movie.genre %></h3>
+    <h1><%= @movie.plot %></h1>
+    <h3><%= @movie.rating %></h3>
+    <h1><%= @movie.score %></h1>
+    <h3><%= @movie.summary %></h3>
+    <h1><%= link_to @movie.director, director_path(@movie.director) %></h1>
+    <ul><% @movie.actors.each do |actor| %>
+        <li><%= link_to actor.name, actor_path(actor) %></li>
+    <% end %></ul>
+<% end %>
+
