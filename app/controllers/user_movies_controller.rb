@@ -17,7 +17,12 @@ class UserMoviesController < ApplicationController
         redirect_to user_movie_movies_path(@user_movie)
     end
 
+    def show
+        @user_movie = UserMovie.find_by(movie_id: params[:id])
+    end
+
     def edit
+        
     end
 
     def update
@@ -28,25 +33,24 @@ class UserMoviesController < ApplicationController
     def destroy
     end
 
-    def set_collection
-        @user_movie = UserMovie.find(params[:id])
-        puts @user_movie
-    end
-
-    def set_user
-        @user = User.find(session[:user_id])
-        if @user 
-            puts @user
-        else
-            session[:message] = "You need to log in to complete this action."
-            redirect_to root_path
-        end
-    end
-
     private
 
     def user_movie_params
         params.require(:user_movie).permit(:source, :user_rating, :user_notes, :private_notes, :user_id, :movie_id)
+    end
+
+    def set_user_movies
+        @user_movie = UserMovie.find_by(user_id: params[:user_id])
+        puts @user_movie
+    end
+
+    def set_user
+        @user = current_user
+        if @user 
+            puts @user
+        else
+            redirect_to root_path
+        end
     end
 
 end

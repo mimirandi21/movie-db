@@ -8,15 +8,21 @@
     <h3><%= @movie.rating %></h3>
     <h1><%= @movie.score %></h1>
     <h3><%= @movie.summary %></h3>
-    <h1><%= link_to @movie.director, director_path(@movie.director) %></h1>
-    <ul><% @movie.actors.each do |actor| %>
-        <li><%= link_to actor.name, actor_path(actor) %></li>
+    <ul><% @movie.directors.each do |director| %>
+        <li>Your movies by: <%= link_to director.name, user_director_path(director) %></li>
+        <li>All movies by: <%= link_to director.name, user_director_path(director) %></li>
     <% end %></ul>
-    <h3><%= @user_movie.source %></h3>
-    <h3><%= @user_movie.user_rating %></h3>
-    <h3><%= @user_movie.user_notes %></h3>
-    <h3><%= @user_movie.private_notes %></h3>
+    <ul><% @movie.actors.each do |actor| %>
+        <li>Your movies starring: <%= link_to actor.name, user_actor_path(actor) %></li>
+        <li>All movies starring: <%= link_to actor.name, actor_path(actor) %></li>
+    <% end %></ul>
     <h3><%= @movie.imdb_link%></h3>
+    <% if @user_movie %>
+        <h3><%= @user_movie.source %></h3>
+        <h3><%= @user_movie.user_rating %></h3>
+        <h3><%= @user_movie.user_notes %></h3>
+        <h3><%= @user_movie.private_notes %></h3>
+    <% end %>
 <% else %>
     <%= @movie.poster_url %>
     <h1><%= @movie.name %></h1>
@@ -27,7 +33,9 @@
     <h3><%= @movie.rating %></h3>
     <h1><%= @movie.score %></h1>
     <h3><%= @movie.summary %></h3>
-    <h1><%= link_to @movie.director, director_path(@movie.director) %></h1>
+    <ul><% @movie.directors.each do |director| %>
+        <li><%= link_to director.name, director_path(director) %></li>
+    <% end %></ul>
     <ul><% @movie.actors.each do |actor| %>
         <li><%= link_to actor.name, actor_path(actor) %></li>
     <% end %></ul>

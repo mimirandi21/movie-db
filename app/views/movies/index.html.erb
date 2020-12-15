@@ -1,1 +1,23 @@
-<%= render 'movie' %>
+<% if logged_in? %>
+    <% if @movies %>
+        <% @movies.each do |movie| %>
+            <%= movie.poster_url %>
+            <%= link_to movie.name, user_collection_path(current_user, movie) %>
+            <%= movie.year %>
+            <%= movie.plot %>
+        <% end %>
+    <% else %>
+        <%= link_to "No movies to see.  Add one here.", find_path(current_user) %>
+    <% end %>
+<% else %>
+    <% if @movies %>
+        <% @movies.each do |movie| %>
+            <%= movie.poster_url %>
+            <%= link_to movie.name, movie_path(movie) %>
+            <%= movie.year %>
+            <%= movie.plot %>
+        <% end %>
+    <% else %>
+        <%= link_to "There are no movies.  Return to main page.", root_path %>
+    <% end %>
+<% end %>

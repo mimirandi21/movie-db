@@ -11,6 +11,11 @@ require('jquery_ujs')
 
 import "bootstrap"
 import "../stylesheets/application"
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel';
+
+import JQuery from 'jquery';
+window.$ = window.JQuery = JQuery;
 
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()

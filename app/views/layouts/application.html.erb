@@ -16,10 +16,10 @@
   <body>
     <% if logged_in? %>
       <div class="sidenav">
-        <a href="<%= root_path %>">Home</a>
+        <a href="<%= user_path(current_user) %>">Home</a>
         <a href="<%= user_movies_path(current_user) %>">Your Collection</a>
         <a href="<%= find_path(current_user) %>">Add a Movie</a>
-        <a href="<%= user_collection_index_path(current_user) %>">All Movies</a>
+        <a href="<%= movies_path %>">All Movies</a>
         <a href="<%= user_actors_path(current_user) %>">All Your Actors</a>
         <a href="<%= user_directors_path(current_user) %>">All Your Directors</a>
         <a href="<%= edit_user_path(current_user) %>">Edit Your Account</a>
