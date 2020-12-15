@@ -2,15 +2,16 @@ class MoviesController < ApplicationController
     before_action :set_movie, only: [:show]
 
     def new
-        @collection = Collection.where(id: params[:collection_id])
-        
+        @movie = Movie.new
     end
 
     def create
-        if @movies = Movie.where("name LIKE ?", "%" + params[:name] + "%")
-            redirect_to 'movies/choose'
+        input = params[:name].upcase
+        @movies = Movie.where("name LIKE ?", "%" + input + "%")
+        if @movies = true
+            redirect_to choose_path(session[:user_id])
         else
-            :create_from_api
+            :choose_from_api
         end
     end
 
@@ -18,9 +19,14 @@ class MoviesController < ApplicationController
 
     end
 
+    def choose_from_api
+        hash = ImdbService.new
+        hash.get_movie_by_name(params[:name])
+    end
+
     def create_from_api
         @movie = Movie.new(movie_params)
-        hash = ImdbService.new
+
     end
 
     def show

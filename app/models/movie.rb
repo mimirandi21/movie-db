@@ -11,4 +11,5 @@ class Movie < ApplicationRecord
     accepts_nested_attributes_for :actors
     accepts_nested_attributes_for :directors
     accepts_nested_attributes_for :movie_actors
+    accepts_nested_attributes_for :movie_directors
 end

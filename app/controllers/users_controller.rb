@@ -34,15 +34,15 @@ class UsersController < ApplicationController
         #get access tokens from google using google oauth2
         @user = User.from_omniauth(auth)        
             if @user.save
-                session[:user_id] = @user.id
                 redirect_to user_path(@user)
             else
-                session[:message] = "Login failed, try again."
                 redirect_to root_path
             end
     end
 
     def signin
+        if logged_in?
+
         render 'users/signin'
     end
 
@@ -52,6 +52,11 @@ class UsersController < ApplicationController
         session[:user_id] = @user.id
         redirect_to user_path(@user)
     end 
+
+    def logout
+        session.delete :user_id
+        redirect_to '/'
+    end
 
     def edit
         @user = current_user

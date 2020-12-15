@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get '/users/signin', to: 'users#signin'
   post '/users/signin', to: 'users#login'
-  get 'users/movies/choose', to: 'movies#choose'
-  post 'users/movies/choose', to:
+  get '/user/logout', to: 'users#logout'
+  get 'users/:user_id/movies/choose', to: 'movies#choose', as: :choose
+  get 'users/:user_id/movies/find', to: 'movies#find', as: :find
+  post 'users/:user_id/movies/find', to: 'movies#create'
+  # post 'users/movies/choose', to:
   
   resources :movie_directors
   resources :user_movies do
@@ -20,7 +23,7 @@ Rails.application.routes.draw do
     resources :movies, only: [:show]
   end
   resources :users do
-    resources :movies
+    resources :movies, :as => :collection
     resources :user_movies
     resources :actors, only: [:show, :index]
     resources :directors, only: [:show, :index]

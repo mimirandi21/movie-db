@@ -4,7 +4,7 @@ Movie:
     <%= form.text_field :name %>
     <br>
 
-    <%= form.fields_for :user_movies do |User_movie_form| %>
+    <%= form.fields_for :user_movies do |user_movie_form| %>
     
         <%= user_movie_form.label :source %>
         <%= user_movie_form.text_field :source %>

@@ -1,0 +1,9 @@
+<%= form_with model: @movie do |form| %>
+Movie Name to Search:
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <br>
+
+    <%= form.submit "Submit" %>
+
+<% end %>
