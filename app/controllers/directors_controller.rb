@@ -7,7 +7,6 @@ class DirectorsController < ApplicationController
 
     def create
         @director = Director.create(director_params)
-        hash = ImdbService.new
     end
 
     def show
@@ -30,7 +29,7 @@ class DirectorsController < ApplicationController
     private
 
     def director_params
-        params.require(:director).permit(:name, :imdb_link)
+        params.require(:director).permit(:name, :imdb_link, :img_url)
     end
 
 end

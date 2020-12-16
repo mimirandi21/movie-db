@@ -3,6 +3,7 @@ class CreateDirectors < ActiveRecord::Migration[6.0]
     create_table :directors do |t|
       t.text :name
       t.text :imdb_link
+      t.text :img_url
 
       t.timestamps
     end

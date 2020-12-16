@@ -4,7 +4,7 @@
     <% @user_movies.each do |movie| %>
         <%= movie.movie.poster_url %>
         <%= movie.movie.name %>
-        <%= movie.rating %>
+        <%= movie.ratings.first %>
     <% end %>
 <% else %>
     <%= link_to "You don't have any movies.  Add one here.", find_path(current_user) %>

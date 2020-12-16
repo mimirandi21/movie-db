@@ -3,7 +3,7 @@
         <% @movies.each do |movie| %>
             <%= movie.poster_url %>
             <%= link_to movie.name, user_collection_path(current_user, movie) %>
-            <%= movie.year %>
+            <%= movie.year.first %>
             <%= movie.plot %>
         <% end %>
     <% else %>
@@ -14,7 +14,7 @@
         <% @movies.each do |movie| %>
             <%= movie.poster_url %>
             <%= link_to movie.name, movie_path(movie) %>
-            <%= movie.year %>
+            <%= movie.years.first %>
             <%= movie.plot %>
         <% end %>
     <% else %>

@@ -27,7 +27,7 @@ class UserMoviesController < ApplicationController
 
     def update
         @user_movie.update(user_movie_params)
-
+        redirect_to user_collection_path(current_user, @user_movie)
     end
 
     def destroy

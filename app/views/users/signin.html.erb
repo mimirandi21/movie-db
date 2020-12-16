@@ -1,8 +1,9 @@
 <h2>Log in form</h2>
 
-<%= form_tag users_signin_path do %>
-    Email: <%= text_field_tag "email" %><br>
-    Password: <%= password_field_tag "password" %>
+<%= form_for :user do |f| %>
+    Email: <%= f.text_field :email %><br>
+    Password: <%= f.password_field :password %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= submit_tag "Login" %>
 <% end %> 
+

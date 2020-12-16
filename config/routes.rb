@@ -6,27 +6,42 @@ Rails.application.routes.draw do
   post '/users/signin', to: 'users#login'
   get '/user/logout', to: 'users#logout'
   get 'users/:user_id/movies/choose', to: 'movies#choose', as: :choose
+  get 'users/:user_id/movies/apichoose', to: 'movies#apichoose', as: :apichoose
   get 'users/:user_id/movies/find', to: 'movies#find', as: :find
   post 'users/:user_id/movies/find', to: 'movies#create'
-  # post 'users/movies/choose', to:
+  post 'users/:user_id/movies/choose', to: 'movies#create_from_db', as: :dbcreate
+  post 'users/:user_id/movies/apichoose', to: 'movies#create_from_api', as: :apicreate
+
   
-  resources :movie_directors
+  resources :genres do
+    resources :movies, only: [:index]
+  end
+  resources :years
+  resources :ratings
+  resources :scores
+  resources :writers do
+    resources :movies, only: [:index]
+  end
   resources :user_movies do
     resources :movies
   end
-  resources :movie_actors
   resources :actors do 
-    resources :movies, only: [:show]
+    resources :movies, only: [:index]
   end
   resources :movies
   resources :directors do
-    resources :movies, only: [:show]
+    resources :movies, only: [:index]
   end
   resources :users do
     resources :movies, :as => :collection
     resources :user_movies
-    resources :actors, only: [:show, :index]
-    resources :directors, only: [:show, :index]
+    resources :actors, only: [:index]
+    resources :directors, only: [:index]
+    resources :years, only: [:index]
+    resources :genres, only: [:index]
+    resources :rating, only: [:index]
+    resources :score, only: [:index]
+    resources :writers, only: [:index]
   end
 
 

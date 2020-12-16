@@ -14,26 +14,7 @@
   </head>
 
   <body>
-    <% if logged_in? %>
-      <div class="sidenav">
-        <a href="<%= user_path(current_user) %>">Home</a>
-        <a href="<%= user_movies_path(current_user) %>">Your Collection</a>
-        <a href="<%= find_path(current_user) %>">Add a Movie</a>
-        <a href="<%= movies_path %>">All Movies</a>
-        <a href="<%= user_actors_path(current_user) %>">All Your Actors</a>
-        <a href="<%= user_directors_path(current_user) %>">All Your Directors</a>
-        <a href="<%= edit_user_path(current_user) %>">Edit Your Account</a>
-        <a href="<%= user_logout_path(current_user) %>">Log Out</a>
-        </div>
-    <% else %>
-      <div class="sidenav">
-        <a href="<%= root_path %>">Home</a>
-        <a href="/auth/google_oauth2">Log In with Google</a>
-        <a href="<%= users_signin_path %>">Log In with Email</a>
-        <a href="<%= new_user_path %>">Create an Account</a>
-        <a href="<%= movies_path %>">See all Movies</a>
-        </div>
-    <% end %>
+    <%= render 'layouts/navbar' %>
     <div class="main">
     <%= yield %>
     </div>

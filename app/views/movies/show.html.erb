@@ -1,12 +1,16 @@
 <% if logged_in? %>
     <%= @movie.poster_url %>
     <h1><%= @movie.name %></h1>
-    <h3><%= @movie.year %></h3>
+    <h3><%= @movie.years.first %></h3>
     <h1><%= @movie.length %></h1>
-    <h3><%= @movie.genre %></h3>
+    <ul>Genres: <% @movie.genres.each do |genre| %>
+        <li><%= genre.name %></li>
+    <% end %></ul>
     <h1><%= @movie.plot %></h1>
-    <h3><%= @movie.rating %></h3>
-    <h1><%= @movie.score %></h1>
+    <h3><%= @movie.ratings.first %></h3>
+    <ul>Ratings: <% @movie.scores.each do |score| %>
+        <li><%= score.score %> <%= score.source %></li>
+    <% end %></ul>
     <h3><%= @movie.summary %></h3>
     <ul><% @movie.directors.each do |director| %>
         <li>Your movies by: <%= link_to director.name, user_director_path(director) %></li>
@@ -26,12 +30,16 @@
 <% else %>
     <%= @movie.poster_url %>
     <h1><%= @movie.name %></h1>
-    <h3><%= @movie.year %></h3>
+    <h3><%= @movie.years.first %></h3>
     <h1><%= @movie.length %></h1>
-    <h3><%= @movie.genre %></h3>
+    <ul><% @movie.genres.each do |genre| %>
+        <li><%= genre.name %></li>
+    <% end %></ul>
     <h1><%= @movie.plot %></h1>
-    <h3><%= @movie.rating %></h3>
-    <h1><%= @movie.score %></h1>
+    <h3><%= @movie.ratings.first %></h3>
+    <ul><% @movie.scores.each do |score| %>
+        <li><%= score.score %> <%= score.source %></li>
+    <% end %></ul>
     <h3><%= @movie.summary %></h3>
     <ul><% @movie.directors.each do |director| %>
         <li><%= link_to director.name, director_path(director) %></li>

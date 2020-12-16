@@ -6,7 +6,7 @@ class ActorsController < ApplicationController
     end
 
     def create
-        hash = ImdbService.new
+        Actor.create(actor_params)
     end
 
     def index
@@ -30,7 +30,7 @@ class ActorsController < ApplicationController
     private
 
     def actor_params
-        params.require(:actor).permit.
+        params.require(:actor).permit(:name, :imdb_link, :img_url)
     end
 
 end
