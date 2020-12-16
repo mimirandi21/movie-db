@@ -1,3 +1,16 @@
+<% if logged_in %>
+    <h2><%= @director.name %></h2>
+
+    <h4>All movies by <%= @director.name %>.</h4>
+    <ul><% @director.movies.each do |movie| %>
+        <%= link_to movie.name, movie_path(movie) %></li>
+    <% end %></ul>
+
+    <h4>Your movies by <%= @director.name %>.</h4>
+    <ul><% directors.movies.each do |movie| %>
+        <%= link_to movie.name, movie_path(movie) %></li>
+    <% end %></ul>  
+
 <h2><%= @director.name %></h2>
 
 <ul><% @director.movies.each do |movie| %>

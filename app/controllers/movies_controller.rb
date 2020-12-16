@@ -14,16 +14,12 @@ class MoviesController < ApplicationController
         else
             hash = ImdbService.new
             results_hash = hash.get_movie_by_name(params[:name])
-            byebug
             # grab results from api into array, assign empty if nothing pulls
-            @movies = [[results_hash["d"][0]["l"] || '', results_hash["d"][0]["id"] || '', !results_hash["d"][0]["i"].nil? ? results_hash["d"][0]["i"]["imageUrl"] : ''],
-                [results_hash["d"][1]["l"] || '', results_hash["d"][1]["id"] || '', !results_hash["d"][1]["i"].nil? ? results_hash["d"][1]["i"]["imageUrl"] : ''],
-                [results_hash["d"][2]["l"] || '', results_hash["d"][2]["id"] || '', !results_hash["d"][2]["i"].nil? ? results_hash["d"][2]["i"]["imageUrl"] : ''],
-                [results_hash["d"][3]["l"] || '', results_hash["d"][3]["id"] || '', !results_hash["d"][3]["i"].nil? ? results_hash["d"][3]["i"]["imageUrl"] : ''],
-                [results_hash["d"][4]["l"] || '', results_hash["d"][4]["id"] || '', !results_hash["d"][4]["i"].nil? ? results_hash["d"][4]["i"]["imageUrl"] : ''],
-                [results_hash["d"][5]["l"] || '', results_hash["d"][5]["id"] || '', !results_hash["d"][5]["i"].nil? ? results_hash["d"][5]["i"]["imageUrl"] : ''],
-                [results_hash["d"][6]["l"] || '', results_hash["d"][6]["id"] || '', !results_hash["d"][6]["i"].nil? ? results_hash["d"][6]["i"]["imageUrl"] : '']
-            ]
+            @movies = []
+            i = 0
+            while i <= results_hash["d"].length
+                @movies << [!results_hash["d"][i]["l"].nil? ? results_hash["d"][i]["l"] : '', results_hash["d"][i]["id"], !results_hash["d"][i]["i"].nil? ? results_hash["d"][i]["i"]["imageUrl"] : '']
+            end
             session[:movies] = @movies
             redirect_to apichoose_path(current_user)
         end
@@ -46,7 +42,7 @@ class MoviesController < ApplicationController
         )
         @user_movie = UserMovie.create(movie_id: @movie.id, user_id: params[:user_id])
 
-        #create or find rating/ create movierating
+        #create or find rating
         @rating = Rating.find_or_create_by(rating: !results_hash["certificates"]["US"][0]["certificate"].nil? ? results_hash["certificates"]["US"][0]["certificate"] : "unknown")
         if @rating != "unknown"
             MovieRating.create[movie_id: @movie.id, rating_id: @rating.id]
