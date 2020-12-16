@@ -7,12 +7,16 @@
     <% end %></ul>
 
     <h4>Your movies by <%= @director.name %>.</h4>
-    <ul><% directors.movies.each do |movie| %>
-        <%= link_to movie.name, movie_path(movie) %></li>
+    <ul><% @director.movies.each do |movie| %>
+        <%= link_to movie.name, user_collection_path(current_user, movie) %></li>
     <% end %></ul>  
 
-<h2><%= @director.name %></h2>
+<% else %>
 
-<ul><% @director.movies.each do |movie| %>
-    <li><%= link_to movie.name, movie_path(movie) %></li>
-<% end %></ul>
+    <h2><%= @director.name %></h2>
+
+    <ul><% @director.movies.each do |movie| %>
+        <li><%= link_to movie.name, movie_path(movie) %></li>
+    <% end %></ul>
+
+<% end %>

@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
     def create
         input = params[:name].titleize
         @movies = Movie.where( 'name like ?', '%' + input + '%' )
+        byebug
         if !@movies.empty?
             @movies = Movie.where( 'name like ?', '%' + input + '%' ).to_a
             render :choose

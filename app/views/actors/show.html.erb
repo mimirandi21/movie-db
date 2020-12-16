@@ -1,5 +1,22 @@
-<h2><%= @actor.name %></h2>
+<% if logged_in %>
+    <h2><%= actor.name %></h2>
 
-<ul><% @actor.movies.each do |movie| %>
-    <li><%= link_to movie.name, movie_path(movie) %><%= movie.role %></li>
-<% end %></ul>
+    <h4>All movies by <%= @actor.name %>.</h4>
+    <ul><% @actor.movies.each do |movie| %>
+        <%= link_to movie.name, movie_path(movie) %></li>
+    <% end %></ul>
+
+    <h4>Your movies by <%= @actor.name %>.</h4>
+    <ul><% @actor.movies.each do |movie| %>
+        <%= link_to movie.name, user_collection_path(current_user, movie) %></li>
+    <% end %></ul>  
+
+<% else %>
+
+    <h2><%= @actor.name %></h2>
+
+    <ul><% @actor.movies.each do |movie| %>
+        <li><%= link_to movie.name, movie_path(movie) %></li>
+    <% end %></ul>
+
+<% end %>

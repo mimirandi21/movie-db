@@ -1,23 +1,23 @@
 <% if logged_in? %>
     <% if @movies %>
         <% @movies.each do |movie| %>
-            <%= movie.poster_url %>
-            <%= link_to movie.name, user_collection_path(current_user, movie) %>
-            <%= movie.year.first %>
-            <%= movie.plot %>
+            <img src=<%= movie.poster_url %>>
+            <h2>Title: <%= link_to movie.name, user_collection_path(current_user, movie) %></h2>
+            <h4>Year Released: <%= movie.year.first %></h4>
+            <h4>Plot: <%= movie.plot %></h4>
         <% end %>
     <% else %>
-        <%= link_to "No movies to see.  Add one here.", find_path(current_user) %>
+        <h4><%= link_to "No movies to see.  Add one here.", find_path(current_user) %></h4>
     <% end %>
 <% else %>
     <% if @movies %>
         <% @movies.each do |movie| %>
-            <%= movie.poster_url %>
-            <%= link_to movie.name, movie_path(movie) %>
-            <%= movie.years.first %>
-            <%= movie.plot %>
+            <img src=<%= movie.poster_url %>>
+            <h2>Title: <%= link_to movie.name, movie_path(movie) %></h2>
+            <h4>Year Released: <%= movie.years.first %></h4>
+            <h4>Plot: <%= movie.plot %></h4>
         <% end %>
     <% else %>
-        <%= link_to "There are no movies.  Return to main page.", root_path %>
+        <h4><%= link_to "There are no movies.  Return to main page.", root_path %><h4>
     <% end %>
 <% end %>
