@@ -108,6 +108,23 @@ class ApiController < ApplicationController
                 MovieScore.create[movie_id: @movie.id, score_id: @score.id, source: "imdb"]
             end
         end
+
+    end
+
+    private
+
+    def query
+        params.fetch(:query, {})
+    end
+
+    def clear_cache
+        params[:clear_cache].present?
+    end
+
+    def refresh_params
+        refresh = { clear_cache: true }
+        refresh.merge!({ query: query }) if query.present?
+        refresh
     end
 
 

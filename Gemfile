@@ -23,12 +23,10 @@ gem 'bcrypt', '~> 3.1.7'
 #encrypt api key
 gem 'figaro'
 #helps simplify calling API
-gem 'httparty'
-gem 'http'
+gem 'sdoc', group: :doc
+gem 'faraday'
 gem 'json'
-gem 'openssl'
-gem 'net-http'
-gem 'uri'
+gem 'coffee-rails'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'tux'

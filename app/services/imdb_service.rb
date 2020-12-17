@@ -1,108 +1,44 @@
 class ImdbService
+    
     require 'uri'
     require 'net/http'
     require 'openssl'
+    attr_accessor :errors
 
     CACHE_DEFAULTS = { expires_in: 3.days, force: false }
     MAX_LIMIT = 10
+
+
+    def initialize(args = {})
+        args.each do |name, value|
+        attr_name = name.to_s.underscore
+        send("#{attr_name}=", value) if respond_to?("#{attr_name}=")
+    end
     
-    def get_movie_by_name(input_name)
-
-        cache = CACHE_DEFAULTS.merge({force:clear_cache})
-
-        base_url = ("https://imdb8.p.rapidapi.com/title/auto-complete?q=")
-        search_params = "#{input_name.gsub(" ", "%20")}"
-        url = URI(base_url + search_params)
-
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-key"]  = ENV["IMDB_API_KEY"]
-        request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
-
-        response = http.request(request)
-        byebug
-        # if response.body == '- Service Unavailable'
-        json_hash= JSON.parse(response.body)
-        return json_hash
-                
+    def where(resource_path, cache, query = {}, options = {})
+        response, status = get_json(resource_path, cache, query)
+        status == 200 ? response : errors(response)
     end
 
-    def get_info_by_search_id(input_id)
-        
-        base_url = ("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=")
-        search_params = "#{input_id}"
-        url = URI(base_url + search_params + "&currentCountry=US")
-
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-key"]  = ENV["IMDB_API_KEY"]
-        request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
-
-        response = http.request(request)
-        json_hash= JSON.parse(response.body)
-        return json_hash
+    def get(id, cache)
+        response, status = get_json(id, cache)
+        status == 200 ? response : errors(response)
     end
 
-    def get_crew_by_search_id(input_id)
-        
-        base_url = ("https://imdb8.p.rapidapi.com/title/get-top-crew?tconst=")
-        search_params = "#{input_id}"
-        url = URI(base_url + search_params)
-
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-key"]  = ENV["IMDB_API_KEY"]
-        request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
-
-        response = http.request(request)
-        json_hash= JSON.parse(response.body)
-        return json_hash
+    def errors(response)
+        error = { errors: { status: response["status"], message: response["message"] } }
+        response.merge(error)
     end
 
-    def get_cast_by_search_id(input_id)
-        
-        base_url = ("https://imdb8.p.rapidapi.com/title/get-top-cast?tconst=")
-        search_params = "#{input_id}"
-        url = URI(base_url + search_params)
-
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-key"]  = ENV["IMDB_API_KEY"]
-        request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
-
-        response = http.request(request)
-        json_hash= JSON.parse(response.body)
-        return json_hash
+    def get_json(root_path, cache, query = {})
+        query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
+        path = query.empty?? root_path : "#{root_path}?#{query_string}"
+        response =  Rails.cache.fetch(path, expires_in: cache[:expires_in], force: cache[:force]) do
+            api.get(path)
+        end
+        [JSON.parse(response.body), response.status]
     end
 
-    def get_person_by_imdb(imdb_link)
-        
-        base_url = ("https://imdb8.p.rapidapi.com/actors/get-bio?nconst=")
-        search_params = "#{imdb_link.gsub("/name/", "")}"
-        url = URI(base_url + search_params)
-
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-key"]  = ENV["IMDB_API_KEY"]
-        request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
-
-        response = http.request(request)
-        json_hash= JSON.parse(response.body)
-        return json_hash
-    end
+    
+    
 end

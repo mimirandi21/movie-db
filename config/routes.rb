@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :movies, only: [:index]
   end
   resources :users do
-    resources :movies, :as => :collection
+    resources :movies, :as => :user_collection
     resources :user_movies
     resources :actors, only: [:index]
     resources :directors, only: [:index]

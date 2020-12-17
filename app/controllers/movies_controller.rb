@@ -6,34 +6,27 @@ class MoviesController < ApplicationController
     end
 
     def create
-        input = params[:name].titleize
         @movies = Movie.where( 'name like ?', '%' + input + '%' )
-        byebug
         if !@movies.empty?
             @movies = Movie.where( 'name like ?', '%' + input + '%' )
             render :choose
         else
-            hash = ImdbService.new
-            results_hash = hash.get_movie_by_name(params[:name])
-            # grab results from api into array, assign empty if nothing pulls
-            @movies = []
-            i = 0
-            while i < results_hash["d"].length
-                @movies << [!results_hash["d"][i]["l"].nil? ? results_hash["d"][i]["l"] : '', results_hash["d"][i]["id"], !results_hash["d"][i]["i"].nil? ? results_hash["d"][i]["i"]["imageUrl"] : '']
-                i += 1
-            end
+            query = params[:name].titleize
+            @movies = Imdb::Movie.search("title/auto-complete?q=", query, clear_cache)
             session[:movies] = @movies
             redirect_to apichoose_path(current_user)
         end
     end
 
     def create_from_db
-
+        @user_movie = UserMovie.new(user_id: current_user.id, movie_id: params[:movie_id])
+        redirect_to update_user_movie(@user_movie.id)
     end
 
     def create_from_api
-        hash = ImdbService.new
-        results_hash = hash.get_info_by_search_id(params[:search_id])
+
+        query = params[:search_id]
+        Imdb::Movie.find("title/get-overview-details?tconst=", query, clear_cache)
         @movie = Movie.create(
             name: params[:name], 
             poster_url: params[:poster_url],
@@ -138,6 +131,17 @@ class MoviesController < ApplicationController
             score_attributes: [:score],
             movie_score_attributes: [:source]  
         )
+    end
+
+
+    def clear_cache
+        params[:clear_cache].present?
+    end
+
+    def refresh_params
+        refresh = { clear_cache: true }
+        refresh.merge!({ query: query }) if query.present?
+        refresh
     end
 
 end
