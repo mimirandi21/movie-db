@@ -3,7 +3,7 @@
         <% @movies.each do |movie| %>
             <img src=<%= movie.poster_url %>>
             <h2>Title: <%= link_to movie.name, user_collection_path(current_user, movie) %></h2>
-            <h4>Year Released: <%= movie.year.first %></h4>
+            <h4>Year Released: <%= movie.years.first %></h4>
             <h4>Plot: <%= movie.plot %></h4>
         <% end %>
     <% else %>

@@ -18,6 +18,8 @@ class ImdbService
         request["x-rapidapi-host"] = 'imdb8.p.rapidapi.com'
 
         response = http.request(request)
+        byebug
+        # if response.body == '- Service Unavailable'
         json_hash= JSON.parse(response.body)
         return json_hash
                 

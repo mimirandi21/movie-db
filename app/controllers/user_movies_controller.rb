@@ -8,13 +8,7 @@ class UserMoviesController < ApplicationController
 
     def create
         @user_movie = UserMovie.create(user_movie_params)
-        if @user_movie.valid?
-            session[:message] = "Your collection has been updated."
-            
-        else
-            session[:message] = "Update failed.  Please try again."
-        end
-        redirect_to user_movie_movies_path(@user_movie)
+        
     end
 
     def show

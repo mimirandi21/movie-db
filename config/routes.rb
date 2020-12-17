@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'users/:user_id/movies/find', to: 'movies#find', as: :find
   post 'users/:user_id/movies/find', to: 'movies#create'
   post 'users/:user_id/movies/choose', to: 'movies#create_from_db', as: :dbcreate
-  post 'users/:user_id/movies/apichoose', to: 'api#create_from_api', as: :apicreate
+  post 'users/:user_id/movies/apichoose', to: 'api#create_movie_from_api', as: :apicreate
 
   
   resources :genres do

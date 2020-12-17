@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
         @movies = Movie.where( 'name like ?', '%' + input + '%' )
         byebug
         if !@movies.empty?
-            @movies = Movie.where( 'name like ?', '%' + input + '%' ).to_a
+            @movies = Movie.where( 'name like ?', '%' + input + '%' )
             render :choose
         else
             hash = ImdbService.new
@@ -18,8 +18,9 @@ class MoviesController < ApplicationController
             # grab results from api into array, assign empty if nothing pulls
             @movies = []
             i = 0
-            while i <= results_hash["d"].length
+            while i < results_hash["d"].length
                 @movies << [!results_hash["d"][i]["l"].nil? ? results_hash["d"][i]["l"] : '', results_hash["d"][i]["id"], !results_hash["d"][i]["i"].nil? ? results_hash["d"][i]["i"]["imageUrl"] : '']
+                i += 1
             end
             session[:movies] = @movies
             redirect_to apichoose_path(current_user)
