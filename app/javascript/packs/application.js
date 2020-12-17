@@ -8,6 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery_ujs')
+require('custom/home')
 
 import "bootstrap";
 import "../stylesheets/application.scss";

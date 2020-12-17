@@ -1,23 +1,48 @@
 <% if logged_in? %>
-    <% if @movies %>
-        <% @movies.each do |movie| %>
-            <img src=<%= movie.poster_url %>>
-            <h2>Title: <%= link_to movie.name, user_collection_path(current_user, movie) %></h2>
-            <h4>Year Released: <%= movie.years.first %></h4>
-            <h4>Plot: <%= movie.plot %></h4>
+    <div class="container">
+        <h2>Movies</h2>
+        <% if @movies %>
+        <div class="card-deck">
+            <% @movies.each do |movie| %>
+            <div class="card bg">
+                <div class="card-body text-center">
+                    <img class="card-img-top" src=<%= movie.poster_url %> alt="Movie image" style="width:100%">
+                    <p class="card-text stretched-link">Title: <%= link_to movie.name, user_collection_path(current_user, movie) %></p>
+                    <p class="card-text">Year Released: <%= movie.years.first %></p>
+                    
+                </div>
+            </div>
+            <% end %>
+        </div>
+        <% else %>
+        <div>
+            <h4><%= link_to "No movies to see.  Add one here.", find_path(current_user) %></h4>
+        </div>
         <% end %>
-    <% else %>
-        <h4><%= link_to "No movies to see.  Add one here.", find_path(current_user) %></h4>
-    <% end %>
+    </div>
+
 <% else %>
-    <% if @movies %>
-        <% @movies.each do |movie| %>
-            <img src=<%= movie.poster_url %>>
-            <h2>Title: <%= link_to movie.name, movie_path(movie) %></h2>
-            <h4>Year Released: <%= movie.years.first %></h4>
-            <h4>Plot: <%= movie.plot %></h4>
+    <div class="container">
+        <h2>Movies</h2>
+        <% if @movies %>
+        <div class="card-deck">
+            <% @movies.each do |movie| %>
+            <div class="card bg">
+                <div class="card-body text-center">
+                    <img class="card-img-top" src=<%= movie.poster_url %> alt="Movie image" style="width:100%">
+                    <p class="card-text stretched-link">Title: <%= link_to movie.name, movie_path(movie) %></p>
+                    <p class="card-text">Year Released: <%= movie.years.first %></p>
+                    
+                </div>
+            </div>
+            <% end %>
+        </div>
+        <% else %>
+        <div>
+            <h4>There are no movies yet.</h4>
+        </div>
         <% end %>
-    <% else %>
-        <h4><%= link_to "There are no movies.  Return to main page.", root_path %><h4>
-    <% end %>
+    </div>
 <% end %>
+
+

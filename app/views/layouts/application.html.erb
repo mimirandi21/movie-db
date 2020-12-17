@@ -8,15 +8,238 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  
-  
-    <nav>
+    
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
   </head>
 
   <body>
-    <%= render 'layouts/navbar' %>
-    <div class="main">
+    <% if logged_in? %>
+    <div class="wrapper">
+
+      <!-- Sidebar  -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3><%= current_user.name %>'s Theater</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+          <li class="active"> 
+            <a href="#moviesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-movies"></i>
+              Movies
+            </a>
+            <ul class="collapse list-unstyled" id="moviesSubmenu">
+              <li>
+                <%= link_to "Your Collection", user_movies_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "All Movies", movies_path %>
+              </li>
+              <li>
+                <%= link_to "Add a Movie", find_path(current_user) %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#actorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-actors"></i>
+              Actors
+            </a>
+            <ul class="collapse list-unstyled" id="actorsSubmenu">
+              <li>
+                <%= link_to "Your Actors",  user_actors_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "All Actors", actors_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#directorsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-directors"></i>
+              Directors
+            </a>
+            <ul class="collapse list-unstyled" id="directorsSubmenu">
+              <li>
+                <%= link_to "Your Directors", user_directors_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "All Directors", actors_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#writersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-writers"></i>
+              Writers
+            </a>
+            <ul class="collapse list-unstyled" id="writersSubmenu">
+              <li>
+                <%= link_to "Search Your Movies", user_writers_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "Search All Movies", writers_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#genresSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-genres"></i>
+              Genres
+            </a>
+            <ul class="collapse list-unstyled" id="genresSubmenu">
+              <li>
+                <%= link_to "Search Your Movies", user_genres_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "Search All Movies", genres_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#yearsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-years"></i>
+              Years
+            </a>
+            <ul class="collapse list-unstyled" id="yearsSubmenu">
+              <li>
+                <%= link_to "Search Your Movies", user_years_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "Search All Movies", years_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#ratingsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-ratings"></i>
+              Ratings
+            </a>
+            <ul class="collapse list-unstyled" id="ratingsSubmenu">
+              <li>
+                <%= link_to "Search Your Movies", user_rating_index_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "Search All Movies", ratings_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="active"> 
+            <a href="#scoresSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-scores"></i>
+              Scores
+            </a>
+            <ul class="collapse list-unstyled" id="scoresSubmenu">
+              <li>
+                <%= link_to "Search Your Movies", user_score_index_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "Search All Movies", scores_path %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <%= link_to "Edit Your Account", edit_user_path(current_user) %><br>  
+        <%= link_to "Log Out", user_logout_path(current_user) %><br>
+        <%= link_to "Home", user_path(current_user) %>
+        
+
+      </nav>
+    <%else%>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Movies, Movies, Movies</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+          <li class="active">
+            <a class="nav-link" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fas fa-home"></i>
+                Log In
+            </a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+              <li>
+                <a class="nav-link" href="/auth/google_oauth2">Log In with Google</a>
+              </li>
+              <li>
+                <a class="nav-link" href="<%= users_signin_path %>">Log In with Email</a>
+              </li>
+              <li>
+                <a class="nav-link" href="<%= new_user_path %>">Create an Account</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="nav-link" href="<%= movies_path %>">See all Movies</a>
+          </li>
+          <li>
+            <a class="nav-link" href="<%= actors_path %>">See all Actors</a>
+          </li>
+          <li>
+            <a class="nav-link" href="<%= directors_path %>">See all Directors</a>
+          </li>
+          <li>
+            <a class="nav-link" href="<%= root_path %>">Home</a>
+          </li>
+        </ul>
+
+      </nav>
+
+    <%end%>
+
+    <!-- Page Content  -->
+    <div id="content" class="bg">
+    
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+          </button>
+        </div>
+      
+      </nav>
+    
+
+
+
+
+    
     <%= yield %>
+    
     </div>
+    
+    
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script> 
+    $(document).ready(function () {
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+
+});
+</script>
   </body>
 </html>
+
+

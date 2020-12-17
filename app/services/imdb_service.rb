@@ -2,8 +2,13 @@ class ImdbService
     require 'uri'
     require 'net/http'
     require 'openssl'
+
+    CACHE_DEFAULTS = { expires_in: 3.days, force: false }
+    MAX_LIMIT = 10
     
     def get_movie_by_name(input_name)
+
+        cache = CACHE_DEFAULTS.merge({force:clear_cache})
 
         base_url = ("https://imdb8.p.rapidapi.com/title/auto-complete?q=")
         search_params = "#{input_name.gsub(" ", "%20")}"
