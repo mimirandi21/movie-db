@@ -12,9 +12,13 @@ class MoviesController < ApplicationController
             render :choose
         else
             query = params[:name].titleize
-            @movies = Imdb::Movie.search("title/auto-complete?q=", query, clear_cache)
-            session[:movies] = @movies
-            redirect_to apichoose_path(current_user)
+            @movies, @errors = Imdb::Movie.search(query, clear_cache)
+            if @errors
+                render user_path(current_user)
+            else
+                session[:movies] = @movies
+                redirect_to apichoose_path(current_user)
+            end
         end
     end
 
@@ -26,8 +30,12 @@ class MoviesController < ApplicationController
     def create_from_api
 
         query = params[:search_id]
-        Imdb::Movie.find("title/get-overview-details?tconst=", query, clear_cache)
-        @movie = Movie.create(
+        results = Imdb::Movie.find("title/get-overview-details?tconst=", query, clear_cache)
+
+        movies = response.fetch('d', []).map { |movie| movie.key?["l"] ? ["l"] : '', movie.key?["id"] ? ["id"] : '', movie.key?("i") ? ["i"]["imageUrl"] : ''}
+        [ movies, response[:errors] ]
+
+        @movie = Movie.new(
             name: params[:name], 
             poster_url: params[:poster_url],
             length: !results_hash["title"]["runningTimeInMinutes"].nil? ? results_hash["title"]["runningTimeInMinutes"] : "",

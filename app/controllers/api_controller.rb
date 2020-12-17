@@ -1,17 +1,19 @@
 class ApiController < ApplicationController
 
     def create_movie_from_api
-        hash = ImdbService.new
-        @results_hash = hash.get_info_by_search_id(params[:search_id])
+
+        query = params[:search_id]
+        @results_hash, @errors = Imdb::Api.info_search("title/get-overview-details?tconst=", query, clear_cache)
+
         @movie = Movie.create(
             name: params[:name], 
             poster_url: params[:poster_url],
-            length: !!@results_hash["title"]["runningTimeInMinutes"] ? @results_hash["title"]["runningTimeInMinutes"] : "",
-            plot: !!@results_hash["plotOutline"]["text"] ? @results_hash["plotOutline"]["text"] : "unknown",
-            summary: !!@results_hash["plotSummary"]["text"] ? @results_hash["plotSummary"]["text"] : "unknown",
-            imdb_link: "www.imdb.com" + @results_hash["title"]["id"]
+            length: @results_hash.key?(["title"]) && @results_hash["title"].key?(["runningTimeInMinutes"]) ? @results_hash["title"]["runningTimeInMinutes"] : "",
+            plot: @results_hash.key?(["plotOutline"]) && @results_hash["plotOutline"].key?(["text"]) ? @results_hash["plotOutline"]["text"] : "unknown",
+            summary: @results_hash.key?(["plotSummary"]) && @results_hash["plotSummary"].key?(["text"]) ? @results_hash["plotSummary"]["text"] : "unknown",
+            imdb_link: "www.imdb.com" + params[:search_id]
         )
-        
+
         self.create_cast_from_api
         self.create_crew_from_api
         self.create_genres_from_api
@@ -23,8 +25,8 @@ class ApiController < ApplicationController
     end
 
     def create_cast_from_api
-        cast_hash = ImdbService.new
-        cast_results = cast_hash.get_cast_by_search_id(params[:search_id])
+        query = params[:search_id]
+        actor_hash, @errors = Imdb::Api.cast_search("title/get-overview-details?tconst=", query, clear_cache)
         @cast = []
         i = 0
         while i < 10
