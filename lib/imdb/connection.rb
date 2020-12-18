@@ -1,19 +1,19 @@
-require 'faraday'
-require 'json'
+# require 'faraday'
+# require 'json'
 
-class Connection
+# class Connection
 
-    BASE = ("https://imdb8.p.rapidapi.com/")
+#     BASE = ("https://imdb8.p.rapidapi.com/")
 
-    def self.api
-        
-        Faraday.new(url: BASE) do |faraday|
-            faraday.response :logger
-            faraday.adapter Faraday.default_adapter
-            faraday.headers['Content-Type'] = 'application/json'
-            faraday.headers['x-rapidapi-key'] = ENV['IMDB_API_KEY']
-        end
-    end
+#     def self.api
+#         BASE = ("https://imdb8.p.rapidapi.com/")
+#         Faraday.new(url: BASE) do |faraday|
+#             faraday.response :logger
+#             faraday.adapter Faraday.default_adapter
+#             faraday.headers['Content-Type'] = 'application/json'
+#             faraday.headers['x-rapidapi-key'] = ENV['IMDB_API_KEY']
+#         end
+#     end
 
     # def self.movie_api
     #     base_url = ("https://imdb8.p.rapidapi.com/title/auto-complete?q=")
